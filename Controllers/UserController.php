@@ -36,7 +36,7 @@ class UserController
 
     // actializar un registro
 
-       public function updateView() // David
+    public function updateView() // David
     {
         $roles = new Roles;
         $data = $roles->all();
@@ -47,24 +47,33 @@ class UserController
     public function update() // David
     {
         $id = $_GET['id'];
-        $correo = $_POST['correo'];
+        $nombre =  $_POST['nombre'];
+        $apellido =  $_POST['apellido'];
+        $email =  $_POST['email'];
         $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $rol_id = $_POST['rol'];
+        $direccion =  $_POST['direccion'];
+        $nacimiento = $_POST['nacimiento'];
+        $rol_id =  $_POST['rol'];
+        $asignatura_id = $_POST['asignatura_id'];
 
         $cliente = new Usuario;
-        $cliente->update($id, $correo, $hash, $rol_id);
+        $cliente->update($id, $nombre, $apellido, $email, $hash, $direccion, $nacimiento, $rol_id, $asignatura_id);
 
         header('location: ../index.php?controller=UserController&action=index');
     }
+
+
+
 
     // Eliminar un registro de la tabla
     public function destroy() //Jairo
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
+            $usuario =  $_GET['asignatura'];
 
             $usuario = new Usuario;
-            $usuario->delete($id);
+            $usuario->delete($id, $usuario);
 
 
             header('location: ../index.php?controller=UserController&action=index');

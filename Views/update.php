@@ -176,10 +176,10 @@
      }
  </style>
  <div class="container">
-    
+
      <div class="screen">
          <div class="screen__content">
-             <form action="../index.php?controller=UserController&action=update&id=<?=$_GET['id']?>" class="login" method="POST">
+             <form action="../index.php?controller=UserController&action=update&id=<?= $_GET['id'] ?>" class="login" method="POST">
                  <div class="login__field">
                      <i class="login__icon fas fa-user"></i>
                      <input type="text" name="correo" class="login__input" placeholder="User name / Email">
@@ -206,7 +206,7 @@
                      <i class="button__icon fas fa-chevron-right"></i>
                  </button>
              </form>
-              
+
          </div>
          <div class="screen__background">
              <span class="screen__background__shape screen__background__shape4"></span>

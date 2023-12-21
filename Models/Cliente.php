@@ -19,7 +19,8 @@ class Cliente
     public function all()
     {
 
-        $query = 'SELECT * FROM usuarios';
+        // $query = 'SELECT * FROM usuarios JOIN asignaturas on usuarios.asignatura_id = asignaturas.id';
+        
 
         try {
             $stm = $this->conexion->prepare($query);

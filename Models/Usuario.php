@@ -20,7 +20,7 @@ class Usuario
     public function all()
     {
 
-        $query = 'SELECT * FROM usuarios';
+        $query = 'SELECT * FROM usuarios JOIN asignaturas on usuarios.asignatura_id = asignaturas.id';
 
         try {
             $stm = $this->conexion->prepare($query);
@@ -67,7 +67,7 @@ class Usuario
     public function delete($id) // Jairo
     {
 
-        $query = 'DELETE FROM usuarios WHERE id = ?';
+        $query = 'DELETE FROM usuarios ,usuarios.asignatura_id WHERE id = ?';
 
         try {
             $stm = $this->conexion->prepare($query);

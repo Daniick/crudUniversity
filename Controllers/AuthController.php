@@ -51,6 +51,7 @@ class AuthController
     public function store()
     {
         $nombre =  $_POST['nombre'];
+        $apellido =  $_POST['apellido'];
         $email =  $_POST['email'];
         $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $direccion =  $_POST['direccion'];
@@ -60,7 +61,7 @@ class AuthController
 
 
         $auth = new Auth;
-        $auth->register($nombre, $email, $hash, $direccion, $nacimiento, $rol_id, $asignatura_id);
+        $auth->register($nombre, $apellido, $email, $hash, $direccion, $nacimiento, $rol_id, $asignatura_id);
 
         header('location: ../index.php?controller=UserController&action=index');
     }

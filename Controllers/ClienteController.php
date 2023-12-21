@@ -76,6 +76,4 @@ class ClienteController
 // instanciia para probar cliente id
 
 $clienteController = new ClienteController();
-$idExistente = 1;
-echo " Prabando ID)";
-$clienteController->show($idExistente);
+print_r($clienteController->index());

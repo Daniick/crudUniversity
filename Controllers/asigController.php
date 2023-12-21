@@ -6,7 +6,7 @@ use Models\Database;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Vendor/autoload.php';
 
-class Roles
+class Asig
 {
     private $conexion;
     public function __construct()
@@ -19,13 +19,14 @@ class Roles
     public function all()
     {
 
-        $query = 'SELECT * FROM roles';
+        $query = 'SELECT * FROM asignaturas';
 
         try {
             $stm = $this->conexion->prepare($query);
             $stm->execute();
             $rs = $stm->fetchAll(\PDO::FETCH_ASSOC);
-
+            /*  session_start();
+            $_SESSION['asignaturaC'] = $rs; */
             return $rs;
         } catch (\PDOException $e) {
             echo $e->getMessage();

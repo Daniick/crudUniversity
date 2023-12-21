@@ -200,10 +200,7 @@
                      <select name="asignatura_id" id="asignatura_id">
                          <option value="" disabled selected>Select asignatura</option>
                          <?php foreach ($data as $asignatura_id) : ?>
-
                              <option value="<?= $asignatura_id['id'] ?>"><?= $asignatura_id['asignatura_id'] ?></option>
-
-
                          <?php endforeach; ?>
                      </select>
                      <!-- <i class="login__icon fas fa-lock"></i>
