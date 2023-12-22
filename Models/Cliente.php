@@ -18,10 +18,7 @@ class Cliente
     // mostrar todos los clientes
     public function all()
     {
-
         // $query = 'SELECT * FROM usuarios JOIN asignaturas on usuarios.asignatura_id = asignaturas.id';
-        
-
         try {
             $stm = $this->conexion->prepare($query);
             $stm->execute();
@@ -65,7 +62,7 @@ class Cliente
         }
     }
 
-    //actualizar un cliente
+    //actualizar un cliente este puede ser tambien 
 public function update($nombre, $direccion, $telefono, $id) //Aaron
 {
     $query = "UPDATE `clientes` SET `nombre`= ?,`direccion`=?,`telefono`=? WHERE `id`=?";
@@ -84,7 +81,6 @@ public function update($nombre, $direccion, $telefono, $id) //Aaron
     // eliminar un cliente
     public function delete($id) //Michael
     {
-
         $query = 'DELETE FROM usuarios WHERE id = ? ';
 
         try {

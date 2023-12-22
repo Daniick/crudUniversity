@@ -126,11 +126,9 @@ $b = $a->all();
                 <thead class="bg-secondary text-white">
                     <tr>
                         <th class="text-center">#</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Dirección</th>
-                        <th>Fec. de Nacimiento</th>
-                        <th>Clase Asignada</th>
+                        <th>Clase</th>
+                        <th>Maestro</th>
+                        <th>Alumnos Inscritos</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -252,10 +250,3 @@ $b = $a->all();
 </body>
 
 </html>
-
-<!-- <a href="../index.php?controller=AuthController&action=create" class="btn btn-secondary">Nuevo Usuario</a> -->
-
-
-<!-- <td> <?php foreach ($b as $asignaturas) : ?>
-                                    <?= $asignaturas['asignatura'] ?></td>
-                        <?php endforeach; ?> -->
