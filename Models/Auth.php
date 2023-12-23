@@ -35,16 +35,16 @@ class Auth
     public function register($nombre, $apellido, $email, $password, $direccion, $nacimiento, $rol_id, $asignatura_id)
     {
         $query = "INSERT INTO usuarios(`nombre`,`apellido`, `email`, `password`,`direccion`, `nacimiento`, `rol_id`,`asignatura_id`) VALUES (?,?,?,?,?,?,?,?)";
-        // $hash = password_hash($password, PASSWORD_DEFAULT);
+
         try {
             $stm = $this->conexion->prepare($query);
             $stm->execute([$nombre, $apellido, $email, $password, $direccion, $nacimiento, $rol_id, $asignatura_id]);
 
-            return true;
+            /* return true; */
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }
     }
 }
-/* $pas = new Auth();
-$pas->register("", "admin@admin", "admin", "", "", 1, 1); */
+// $pas = new Auth();
+// $pas->register("", "", "david@admin", "admin", "", "", 2, 1);

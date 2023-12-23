@@ -19,8 +19,8 @@ class Asig
     public function all()
     {
 
-        $query = 'SELECT * FROM asignaturas';
-
+        /* $query = 'SELECT * FROM `asignaturas` RIGHT JOIN usuarios ON usuarios.asignatura_id = asignaturas.id WHERE usuarios.rol_id = 2 '; */
+        $query = 'SELECT * FROM `asignaturas` WHERE id;';
         try {
             $stm = $this->conexion->prepare($query);
             $stm->execute();
@@ -31,17 +31,32 @@ class Asig
             echo $e->getMessage();
         }
     }
-    public function register($asignaturas)
+    public function clases()
     {
-        $query = "INSERT INTO asignaturas(`asignatura`) VALUES (?)";
 
+        $query = 'SELECT * FROM `asignaturas` RIGHT JOIN usuarios ON usuarios.asignatura_id = asignaturas.id WHERE usuarios.rol_id = 2 ';
+        // $query = 'SELECT * FROM `asignaturas` WHERE id;';
         try {
             $stm = $this->conexion->prepare($query);
-            $stm->execute([$asignaturas]);
+            $stm->execute();
+            $rs = $stm->fetchAll(\PDO::FETCH_ASSOC);
 
-            return true;
+            return $rs;
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }
     }
+    // public function register($asignaturas)
+    // {
+    //     $query = "INSERT INTO asignaturas(`asignatura`) VALUES (?)";
+
+    //     try {
+    //         $stm = $this->conexion->prepare($query);
+    //         $stm->execute([$asignaturas]);
+
+    //         return true;
+    //     } catch (\PDOException $e) {
+    //         echo $e->getMessage();
+    //     }
+    // }
 }

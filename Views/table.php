@@ -63,7 +63,7 @@ $b = $a->all();
                     </div>
                     <div class="modal-body">
 
-                        <form action="../index.php?controller=AuthController&action=store" method="post">
+                        <form action="../index.php?controller=AuthController&action=store" method="POST">
                             <div class="mb-3">
                                 <label for="email"><strong>Correo Electronico</strong></label>
                                 <input type="text" name="email" class="form-control" placeholder="Ingresa email">
@@ -105,6 +105,11 @@ $b = $a->all();
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+                            <!--  <div class="mb-3">
+                                <label for="fechaNacimiento"><strong>asignatura</strong></label>
+                                <input type="text" name='asignatura_id' class="form-control" id="asignatura_id">
+                            </div> -->
+
                     </div>
 
                     <div class="text-center pb-4"> <!-- Contenedor para centrar el botón -->

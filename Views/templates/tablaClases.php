@@ -5,7 +5,7 @@ use Models\Asig;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Models/Asig.php';
 
 $a = new Asig;
-$b = $a->all();
+$b = $a->clases();
 
 ?>
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ $b = $a->all();
                     Nuevo Usuario
                 </button> -->
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Nuevo Usuario
+                    Agregar Clase
                 </button>
             </div>
         </div>
@@ -58,48 +58,33 @@ $b = $a->all();
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Usuario</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Clase</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
                         <form action="../index.php?controller=AuthController&action=store" method="post">
                             <div class="mb-3">
-                                <label for="email"><strong>Correo Electronico</strong></label>
-                                <input type="text" name="email" class="form-control" placeholder="Ingresa email">
+                                <label for="email"><strong>Nombre de la Materia</strong></label>
+                                <input type="text" name="email" class="form-control" placeholder="Ingresa Nueva Materia">
                             </div>
-                            <div class="mb-3">
-                                <div class="mb-3">
-                                    <label for="nombre"><strong>Nombre(s)</strong></label>
-                                    <input type="text" name="nombre" class="form-control" placeholder="Ingresa nombre(s) ">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="apellido"><strong>Apellido(s)</strong></label>
-                                <input type="text" name="apellido" class="form-control" placeholder="Ingresa apellido(s)">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password"><strong>Contraseña</strong></label>
-                                <input type="password" name="password" class="form-control" placeholder="Password">
-                            </div>
-                            <div class="mb-3">
-                                <label for="direccion"><strong>Direccion</strong></label>
-                                <input type="text" name="direccion" class="form-control" placeholder="Direccion">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fechaNacimiento"><strong>Fecha de Nacimiento</strong></label>
-                                <input type="date" name='nacimiento' class="form-control" id="nacimiento">
-                            </div>
-                            <div class="mb-3">
+
+                            <!-- <div class="mb-3">
                                 <select name="rol" class="form-select">
                                     <option value="" disabled selected><strong>Seleccionar Rol</strong></option>
                                     <option value="1">Administrador</option>
                                     <option value="2">Maestro</option>
                                 </select>
-                            </div>
+                            </div> -->
+
+
+
+
                             <div class="mb-3">
+                                <label for="asignatura_id"><strong>Maestros disponible para las clases</strong></label>
                                 <select class="form-select" name=" asignatura_id" id="asignatura_id">
-                                    <option value="" disabled selected><strong>Seleccionar Asignatura</strong></option>
+
+                                    <option value="" disabled selected><strong></strong></option>
                                     <?php foreach ($b as $asignaturas) : ?>
                                         <option value="<?= $asignaturas['id'] ?>"><?= $asignaturas['asignatura']  ?></option>
                                     <?php endforeach; ?>
@@ -133,19 +118,13 @@ $b = $a->all();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $usuario) : ?>
+                    <?php foreach ($b as $asignaturas) : ?>
                         <tr>
-                            <td><?= $usuario['id'] ?></td>
-                            <td><?= $usuario['nombre'] ?> <?= $usuario['apellido'] ?></td>
-                            <td><?= $usuario['email'] ?></td>
-                            <td><?= $usuario['direccion'] ?></td>
-                            <td><?= $usuario['nacimiento'] ?></td>
-                            <td><?= $usuario['asignatura'] ?></td>
-
+                            <td><?= $asignaturas['asignatura_id'] ?></td>
+                            <td><?= $asignaturas['asignatura']  ?></td>
+                            <td><?= $asignaturas['nombre']  ?></td>
+                            <td>5</td>
                             <td>
-
-                                <!-- <a href="../index.php?controller=UserController&action=updateView&id=<?= $usuario['id'] ?>" class="fa-regular fa-pen-to-square" style="color: green;"></a>
- -->
                                 <!-- CSS de Bootstrap -->
                                 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 

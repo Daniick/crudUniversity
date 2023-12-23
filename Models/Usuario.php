@@ -23,7 +23,7 @@ class Usuario
 
         $query = 'SELECT usuarios.id, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.direccion, usuarios.nacimiento, asignaturas.asignatura FROM `usuarios` 
         LEFT JOIN asignaturas ON asignaturas.id = usuarios.asignatura_id
-        WHERE rol_id = 2';
+        WHERE rol_id =2';
 
         try {
             $stm = $this->conexion->prepare($query);
