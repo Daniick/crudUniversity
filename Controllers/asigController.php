@@ -10,47 +10,66 @@ class AsigController
 {
     public function index()
     {
-
         // $materia =  $_POST['asignaturas'];
-
-
 
         $auth = new Asig;
         $auth->all();
-
+        $clases = new Asig;
+        $clases->clases();
 
         require_once $_SERVER['DOCUMENT_ROOT'] . '/Views/templates/tablaClases.php';
     }
 
 
+    public function create()
+    {
+
+        $roles = new Asig;
+
+        $data =  $roles->all();
+
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/Views/registrar.php';
+    }
 
 
-    // public function create()
-    // {
+    public function store()
+    {
 
-    //     $roles = new Asig;
-
-    //     $data =  $roles->all();
-
-    //     require_once $_SERVER['DOCUMENT_ROOT'] . '/Views/registrar.php';
-    // }
+        $asignatura = $_POST['asignatura'];
+        $profesor = $_POST['nombre'];
 
 
-    // public function store()
-    // {
-    //     $nombre =  $_POST['nombre'];
-    //     $apellido =  $_POST['apellido'];
-    //     $email =  $_POST['email'];
-    //     $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    //     $direccion =  $_POST['direccion'];
-    //     $nacimiento = $_POST['nacimiento'];
-    //     $rol_id =  $_POST['rol'];
-    //     $asignatura_id = $_POST['asignatura_id'];
+        $auth = new Asig;
+        $auth->register($asignatura, $profesor);
+
+        header('location: ../index.php?controller=AsigController&action=index');
+        // print_r($_POST);
+    }
+
+    public function update()
+    {
+        $id = $_GET['id'];
+        $asignatura = $_POST['asignatura'];
+        $profesor = $_POST['profesor_id'];
+
+        $cliente = new Asig;
+        $cliente->encontrar($asignatura, $profesor);
+        header('location: ../index.php?controller=AsigController&action=index');
+    }
+
+    public function destroy()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $usuario = new Asig;
+            $usuario->delete($id);
 
 
-    //     $auth = new Auth;
-    //     $auth->register($nombre, $apellido, $email, $hash, $direccion, $nacimiento, $rol_id, $asignatura_id);
-
-    //     header('location: ../index.php?controller=UserController&action=index');
-    // }
+            header('location: ../index.php?controller=AsigController&action=index');
+        }
+    }
 }
+
+//  $ho= new AsigController;
+// $ho->update(); 

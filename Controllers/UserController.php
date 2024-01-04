@@ -16,6 +16,14 @@ class UserController
 
         require_once $_SERVER['DOCUMENT_ROOT'] . '/Views/table.php';
     }
+    public function index2()
+    {
+        $clientes = new Usuario;
+
+        $da = $clientes->all();
+
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/Views/templates/tablaPermisos.php';
+    }
 
     // Mostrar un registro de la tabla
     public function show($id) // Omar
@@ -68,6 +76,7 @@ class UserController
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $email = $_POST['email'];
+        $estado = $_POST['estado'];
         $direccion = $_POST['direccion'];
         $nacimiento = $_POST['nacimiento'];
         $rol_id = $_POST['rol'];
@@ -78,19 +87,19 @@ class UserController
 
         $cliente = new Usuario;
 
-        $cliente->update($nombre, $apellido, $email, $password, $direccion, $nacimiento, $rol_id, $asignatura_id, $id);
+        $cliente->update($nombre, $apellido, $email, $password, $estado, $direccion, $nacimiento, $rol_id, $asignatura_id, $id);
 
         header('location: ../index.php?controller=UserController&action=index');
     }
 
-    // Eliminar un registro de la tabla
-    public function destroy() //Jairo
+
+    public function destroy()
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
 
             $usuario = new Usuario;
-            $usuario->delete($id, $usuario);
+            $usuario->delete($id);
 
 
             header('location: ../index.php?controller=UserController&action=index');

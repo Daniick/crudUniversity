@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['userData'])) {
     $userData = $_SESSION['userData'];
 
-    $cliente  = ['Clases' => 'index.php?'];
+    $cliente  = ['Clases' => 'index.php?controller=MaestroController&action=index'];
     $admin = ['Permisos' => 'index.php?controller=PermisosController&action=index', 'Maestros' => 'index.php?controller=UserController&action=index', 'Clases' => 'index.php?controller=AsigController&action=index'];
 
     if ($userData['rol_id'] === 1) {

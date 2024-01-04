@@ -40,7 +40,6 @@ if (isset($_SESSION['userData'])) {
         gap: 24px;
         font-size: 1.2rem;
         font-weight: 600;
-
     }
 
     li {

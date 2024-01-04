@@ -25,6 +25,11 @@ $b = $a->all();
         padding: 0;
     }
 
+    .table td {
+        border-right: 1px solid #C0C0C0;
+        /* Establece el estilo y color de la línea divisoria */
+    }
+
     .nav {
         background-color: #007bff;
         border: 1px solid gray;
@@ -47,7 +52,7 @@ $b = $a->all();
                 <!-- <button href="../index.php?controller=AuthController&action=create" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Nuevo Usuario
                 </button> -->
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary float-end mr-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Nuevo Usuario
                 </button>
             </div>
@@ -125,7 +130,7 @@ $b = $a->all();
     </div>
 
 
-    <div class="row">
+    <div class="row ml-5 mr-5 tabla">
         <div class="col-12">
             <table id="datatable_users" class="table table-striped ">
                 <thead class="bg-secondary text-white">
@@ -147,26 +152,32 @@ $b = $a->all();
                             <td><?= $usuario['email'] ?></td>
                             <td><?= $usuario['direccion'] ?></td>
                             <td><?= $usuario['nacimiento'] ?></td>
-                            <td><?= $usuario['asignatura'] ?></td>
+                            <td><?php
+                                if (empty($usuario['asignatura'])) {
+                                    echo '<div style="display: inline-block; background-color: yellow; padding: 5px;  border-radius: 5px">Asignatura no registrada</div>';
+                                } else {
+                                    echo $usuario['asignatura'];
+                                }
+                                ?></td>
 
                             <td>
 
-                                <!-- <a href="../index.php?controller=UserController&action=updateView&id=<?= $usuario['id'] ?>" class="fa-regular fa-pen-to-square" style="color: green;"></a>
- -->
-                                <!-- CSS de Bootstrap -->
+
+
+
                                 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-                                <!-- JavaScript de Bootstrap (requiere jQuery) -->
+
                                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-                                <!-- <a href="#" data-toggle="modal" data-target="#actualizarUsuario" class="fa-regular fa-pen-to-square" style="color: green;"></a> -->
+
                                 <a href="#" data-toggle="modal" data-target="#actualizarUsuario<?= $usuario['id'] ?>" class="fa-regular fa-pen-to-square" style="color: green;"></a>
 
 
-                                <!-- <div class="modal fade" id="actualizarUsuario" tabindex="-1" role="dialog" aria-labelledby="actualizarUsuarioLabel" aria-hidden="true"> -->
+
                                 <div class="modal fade" id="actualizarUsuario<?= $usuario['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="actualizarUsuarioLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -178,11 +189,11 @@ $b = $a->all();
                                             </div>
                                             <div class="modal-body">
 
-                                                <!-- <form action="../index.php?controller=UserController&action=update&id=<?= $usuario['id'] ?> " method="POST"> -->
+
                                                 <form action="../index.php?controller=UserController&action=update&id=<?= $usuario['id'] ?> " method="POST">
                                                     <div class="mb-3">
                                                         <label for="email">Correo Electronico</label>
-                                                        <!-- <input type="text" name="email" class="form-control" placeholder="Ingresa email" value="<?= $usuario['email'] ?>"> -->
+
                                                         <input type="text" name="email" class="form-control" placeholder="Ingresa email" value="<?= $usuario['email'] ?>">
                                                     </div>
                                                     <div class="mb-3">
@@ -254,13 +265,7 @@ $b = $a->all();
             });
         });
     </script>
+    <script src="./templates/ini.js"></script>
 </body>
 
 </html>
-
-<!-- <a href="../index.php?controller=AuthController&action=create" class="btn btn-secondary">Nuevo Usuario</a> -->
-
-
-<!-- <td> <?php foreach ($b as $asignaturas) : ?>
-                                    <?= $asignaturas['asignatura'] ?></td>
-                        <?php endforeach; ?> -->

@@ -6,6 +6,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/Models/Asig.php';
 
 $a = new Asig;
 $b = $a->clases();
+$q = new Asig;
+$k = $q->traerMaestro();
+
 
 ?>
 <!DOCTYPE html>
@@ -17,12 +20,19 @@ $b = $a->clases();
     <title>Tabla Bootstrap con Paginación y Búsqueda</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <style>
     .table {
         width: 95%;
         margin: 20px auto;
         padding: 0;
+    }
+
+    .table td {
+        border-right: 1px solid #C0C0C0;
+        /* Establece el estilo y color de la línea divisoria */
     }
 
     .nav {
@@ -36,10 +46,12 @@ $b = $a->clases();
 </style>
 
 <body>
+
+
     <div class="container my-10 ml-10">
         <div class="row">
             <div class="col-14">
-                <h2 class="titulo">Lista de Maestros</h2>
+                <h2 class="titulo">Lista de Clases</h2>
             </div>
         </div>
         <div class="row mb-3">
@@ -47,7 +59,7 @@ $b = $a->clases();
                 <!-- <button href="../index.php?controller=AuthController&action=create" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Nuevo Usuario
                 </button> -->
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary float-end mr-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Agregar Clase
                 </button>
             </div>
@@ -63,31 +75,22 @@ $b = $a->clases();
                     </div>
                     <div class="modal-body">
 
-                        <form action="../index.php?controller=AuthController&action=store" method="post">
+                        <form action="../index.php?controller=AsigController&action=store" method="post">
                             <div class="mb-3">
-                                <label for="email"><strong>Nombre de la Materia</strong></label>
-                                <input type="text" name="email" class="form-control" placeholder="Ingresa Nueva Materia">
+                                <label for="asignatura"><strong>Nombre de la Materia</strong></label>
+                                <input type="text" name="asignatura" class="form-control" placeholder="Ingresa Nueva Materia">
                             </div>
-
-                            <!-- <div class="mb-3">
-                                <select name="rol" class="form-select">
-                                    <option value="" disabled selected><strong>Seleccionar Rol</strong></option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Maestro</option>
-                                </select>
-                            </div> -->
-
-
-
 
                             <div class="mb-3">
                                 <label for="asignatura_id"><strong>Maestros disponible para las clases</strong></label>
-                                <select class="form-select" name=" asignatura_id" id="asignatura_id">
+                                <select class="form-select" name="nombre" id="selectProfesores">
+                                    <!-- Aquí se pueden agregar opciones de profesores -->
+                                    <option value="" selected><strong>Seleccionar Profesor</strong></option>
+                                    <?php foreach ($k as $maestros) : ?>
 
-                                    <option value="" disabled selected><strong></strong></option>
-                                    <?php foreach ($b as $asignaturas) : ?>
-                                        <option value="<?= $asignaturas['id'] ?>"><?= $asignaturas['asignatura']  ?></option>
+                                        <option value="<?= $maestros['profesor'] ?>"><?= $maestros['nombre'] ?> <?= $maestros['apellido'] ?></option>
                                     <?php endforeach; ?>
+                                    <!-- Agregar más opciones según sea necesario -->
                                 </select>
                             </div>
                     </div>
@@ -105,7 +108,7 @@ $b = $a->clases();
     </div>
 
 
-    <div class="row">
+    <div class="row ml-5 mr-5 tabla">
         <div class="col-12">
             <table id="datatable_users" class="table table-striped ">
                 <thead class="bg-secondary text-white">
@@ -113,95 +116,71 @@ $b = $a->clases();
                         <th class="text-center">#</th>
                         <th>Clase</th>
                         <th>Maestro</th>
-                        <th>Alumnos Inscritos</th>
+                        <!-- <th>Alumnos Inscritos</th> -->
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($b as $asignaturas) : ?>
                         <tr>
-                            <td><?= $asignaturas['asignatura_id'] ?></td>
+                            <td><?= $asignaturas['id'] ?></td>
                             <td><?= $asignaturas['asignatura']  ?></td>
-                            <td><?= $asignaturas['nombre']  ?></td>
-                            <td>5</td>
+                            <td><?= $asignaturas['nombre']  ?><?= $asignaturas['profesor_id'] ?> <?= $asignaturas['apellido']  ?></td>
+                            <!-- <td>No hay alumnos</td> -->
                             <td>
-                                <!-- CSS de Bootstrap -->
+                                <!-- Agregar enlaces a Bootstrap y jQuery si no están incluidos -->
                                 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-                                <!-- JavaScript de Bootstrap (requiere jQuery) -->
                                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                <!-- Botón con icono para activar el modal -->
+                                <a href="../index.php?controller=AsigController&action=update&id=<?= $asignaturas['id'] ?>" class="fa-regular fa-pen-to-square" data-toggle="modal" data-target="#actualizarMateriaModal_<?= $asignaturas['id'] ?>" style="color: green;"></a>
 
 
-                                <!-- <a href="#" data-toggle="modal" data-target="#actualizarUsuario" class="fa-regular fa-pen-to-square" style="color: green;"></a> -->
-                                <a href="#" data-toggle="modal" data-target="#actualizarUsuario<?= $usuario['id'] ?>" class="fa-regular fa-pen-to-square" style="color: green;"></a>
 
-
-                                <!-- <div class="modal fade" id="actualizarUsuario" tabindex="-1" role="dialog" aria-labelledby="actualizarUsuarioLabel" aria-hidden="true"> -->
-                                <div class="modal fade" id="actualizarUsuario<?= $usuario['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="actualizarUsuarioLabel" aria-hidden="true">
+                                <!-- Modal para actualizar la materia -->
+                                <div class="modal fade" id="actualizarMateriaModal_<?= $asignaturas['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="actualizarMateriaModalLabel_<?= $asignaturas['id'] ?>" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="actualizarUsuarioLabel">Actualizar Usuario</h5>
+                                                <h5 class="modal-title" id="actualizarMateriaModalLabel">Actualizar Materia</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
+                                                <form action="../index.php?controller=AsigController&action=update&id=<?= $asignaturas['id'] ?> " method="POST">
+                                                    <div class="mb-3">
+                                                        <label for="name">Nombre de la Materia</label>
 
-                                                <!-- <form action="../index.php?controller=UserController&action=update&id=<?= $usuario['id'] ?> " method="POST"> -->
-                                                <form action="../index.php?controller=UserController&action=update&id=<?= $usuario['id'] ?> " method="POST">
-                                                    <div class="mb-3">
-                                                        <label for="email">Correo Electronico</label>
-                                                        <!-- <input type="text" name="email" class="form-control" placeholder="Ingresa email" value="<?= $usuario['email'] ?>"> -->
-                                                        <input type="text" name="email" class="form-control" placeholder="Ingresa email" value="<?= $usuario['email'] ?>">
+                                                        <input type="text" name="asignatura" class="form-control" placeholder="Ingresa Materia" value="<?= $asignaturas['asignatura'] ?>">
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <div class="mb-3">
-                                                            <label for="nombre">Nombre(s)</label>
-                                                            <input type="text" name="nombre" class="form-control" placeholder="Ingresa nombre(s) ">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="apellido">Apellidos(s)</label>
-                                                        <input type="text" name="apellido" class="form-control" placeholder="Ingresa apellido(s)">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="password">Contraseña</label>
-                                                        <input type="password" name="password" class="form-control" placeholder="Password">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="direccion">Direccion</label>
-                                                        <input type="text" name="direccion" class="form-control" placeholder="Direccion">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="fechaNacimiento"><strong>Fecha de Nacimiento</strong></label>
-                                                        <input type="date" name='nacimiento' class="form-control" id="nacimiento">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select name="rol" class="form-select">
-                                                            <option value="" disabled selected>Select Rol</option>
-                                                            <option value="1">Administrador</option>
-                                                            <option value="2">Maestro</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select class="form-select" name=" asignatura_id" id="asignatura_id">
-                                                            <option value="" disabled selected>Seleccionar Asignatura</option>
-                                                            <?php foreach ($b as $asignaturas) : ?>
-                                                                <option value="<?= $asignaturas['id'] ?>"><?= $asignaturas['asignatura']  ?></option>
+                                                    <div class="form-group">
+                                                        <label for="selectProfesores">Maestro Asignado</label>
+
+                                                        <!-- SELECT * FROM usuarios WHERE asignatura_id IS NULL AND rol_id = 2; -->
+
+                                                        <select class="form-select" name="profesor_id" id="selectProfesores">
+                                                            <!-- Aquí se pueden agregar opciones de profesores -->
+                                                            <option value="" selected>Seleccione una opcion</option>
+                                                            <?php foreach ($k as $maestros) : ?>
+
+                                                                <option value="<?= $maestros['profesor'] ?>"> <?= $maestros['nombre'] ?> <?= $maestros['apellido'] ?></option>
                                                             <?php endforeach; ?>
+                                                            <!-- Agregar más opciones según sea necesario -->
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Actualizar</button>
                                                 </form>
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="../index.php?controller=UserController&action=destroy&id=<?= $usuario['id'] ?>" class="fa-solid fa-trash-can " style="color: rgb(170, 11, 11);;"></a>
+                                <a href="../index.php?controller=AsigController&action=destroy&id=<?= $asignaturas['id'] ?>" class="fa-solid fa-trash-can " style="color: rgb(170, 11, 11);;"></a>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
 

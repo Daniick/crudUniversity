@@ -5,7 +5,6 @@ use Models\Roles;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Vendor/autoload.php';
 
-
 class AuthController
 {
     public function login()
@@ -18,10 +17,13 @@ class AuthController
         $auth = new Auth;
         $user = $auth->select($email);
 
-        if (password_verify($password, $user['password'])) {
+        $asignatura = $auth->bring($email);
+
+        if (password_verify($password, $user['password']) && $user['estado'] === 1) {
 
             session_start();
             $_SESSION['userData'] =  $user;
+            $_SESSION['traerAsignatura'] =  $asignatura;
 
             header('location: ../index.php');
         } else {
@@ -31,7 +33,7 @@ class AuthController
 
     public function logout()
     {
-        session_start();
+        // session_start();
         session_destroy();
         header('location: ../index.php');
     }

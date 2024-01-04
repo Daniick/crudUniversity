@@ -77,13 +77,13 @@ class Usuario
             echo $e->getMessage();
         }
     } */
-    public function update($nombre, $apellido, $email, $password, $direccion, $nacimiento, $rol_id, $asignatura_id, $id) // David
+    public function update($nombre, $apellido, $email, $password, $estado, $direccion, $nacimiento, $rol_id, $asignatura_id, $id) // David
     {
-        $query = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ?, direccion = ? ,nacimiento = ?, rol_id = ?, asignatura_id = ? WHERE id = ?";
+        $query = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ?, estado = ? ,direccion = ? ,nacimiento = ?, rol_id = ?, asignatura_id = ? WHERE id = ?";
 
         try {
             $stm = $this->conexion->prepare($query);
-            $stm->execute([$nombre, $apellido, $email, $password, $direccion, $nacimiento, $rol_id, $asignatura_id, $id]);
+            $stm->execute([$nombre, $apellido, $email, $password, $estado, $direccion, $nacimiento, $rol_id, $asignatura_id, $id]);
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }

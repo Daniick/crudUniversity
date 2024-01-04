@@ -45,6 +45,20 @@ class Auth
             echo $e->getMessage();
         }
     }
+
+    public function bring($email)
+    {
+        $query = "SELECT asignaturas.asignatura FROM asignaturas INNER JOIN usuarios on usuarios.asignatura_id = asignaturas.id WHERE email = ?";
+
+        try {
+            $stm = $this->conexion->prepare($query);
+            $stm->execute([$email]);
+
+            $rs = $stm->fetch(\PDO::FETCH_ASSOC);
+
+            return $rs;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
-// $pas = new Auth();
-// $pas->register("", "", "david@admin", "admin", "", "", 2, 1);

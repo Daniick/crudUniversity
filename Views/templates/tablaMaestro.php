@@ -1,15 +1,24 @@
 <?php
 
-use Models\Asig;
+if (isset($_SESSION['traerAsignatura']) && !empty($_SESSION['traerAsignatura'])) {
+    $asignatura = $_SESSION['traerAsignatura'];;
+}
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Models/Asig.php';
-
-$a = new Asig;
-$b = $a->all();
-
+$info = $_SESSION['userData'];
 
 
+// print_r($info);
+// if (isset($_SESSION['userData'])) {
+//     foreach ($_SESSION['userData'] as $key => $value) {
+//         echo $key . ": " . $value . "<br>";
+//     }
+// } else {
+//     echo "No hay datos de usuario en la sesión.";
+// }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,14 +32,9 @@ $b = $a->all();
 </head>
 <style>
     .table {
-        width: 80%;
+        width: 95%;
         margin: 20px auto;
         padding: 0;
-    }
-
-    .table td {
-        border-right: 1px solid #C0C0C0;
-        /* Establece el estilo y color de la línea divisoria */
     }
 
     .nav {
@@ -51,10 +55,13 @@ $b = $a->all();
 </style>
 
 <body>
+
+
+
     <div class="container my-10 ml-10">
         <div class="row">
             <div class="col-14">
-                <h2 class="titulo">Lista de Permisos</h2>
+                <h2 class="titulo">Maestro <?= $info['nombre'] ?> <?= $info['apellido'] ?> Clase: <?= $asignatura['asignatura'] ?></h2>
             </div>
         </div>
         <div class="row mb-3">
@@ -140,101 +147,42 @@ $b = $a->all();
     </div>
 
 
-    <div class="row ml-5 mr-5 tabla">
+    <div class="row ">
         <div class="col-12">
-            <table id="datatable_users" class="table table-striped ">
-                <thead class="bg-secondary text-white">
-                    <tr>
-                        <th class="text-center">#</th>
-
-                        <th>Email / Usuario</th>
-                        <th>Permiso</th>
-                        <th>Estado</th>
-
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($perm as $user) : ?>
+            <div class="table-responsive">
+                <table id="datatable_users" class="table table-striped ">
+                    <thead class="bg-secondary text-white">
                         <tr>
-                            <td><?= $user['id'] ?></td>
-                            <td><?= $user['email'] ?></td>
-                            <td>
-                                <span class="rol bg-<?= $user['rol'] === 'administrador' ? 'warning'  : ($user['rol'] === 'profesor' ? 'primary' : 'light') ?>" style="color: black;"><?= $user['rol'] ?></span>
-                            </td>
-                            <td>
+                            <th class="text-center">#</th>
 
-                                <?php
-                                $estado = $user['estado'] == 1 ? 'activo' : 'inactivo';
-                                $colorFondo = $user['estado'] == 1 ? 'green' : 'red';
-                                ?>
-                                <span style="background-color: <?= $colorFondo ?>; color: white; padding: 5px; border-radius: 5px;"><?= $estado ?></span>
-                            <td>
+                            <th>Email / Usuario</th>
+                            <th>Direccion</th>
+                            <th>Fecha Nacimiento</th>
 
-
-
-                                <!-- CSS de Bootstrap -->
-                                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-
-                                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-                                <a href="#" data-toggle="modal" data-target="#actualizarUsuario<?= $user['id'] ?>" class="fa-regular fa-pen-to-square" style="color: green;"></a>
-
-
-
-                                <div class="modal fade" id="actualizarUsuario<?= $user['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="actualizarUsuarioLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="actualizarUsuarioLabel">Actualizar Usuario</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-
-
-                                                <form action="../index.php?controller=PermisosController&action=update&id=<?= $user['id'] ?>" method="POST">
-
-                                                    <div class="mb-3">
-                                                        <label for="email">Correo Electronico</label>
-
-                                                        <input type="text" name="email" class="form-control" value="<?= $user['email'] ?> ">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select name="rol_id" class=" form-select" required>
-                                                            <option value="" disabled selected>Select Rol</option>
-                                                            <option value="1">Administrador</option>
-                                                            <option value="2">Maestro</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select name="estado" class=" form-select" required>
-                                                            <option value="" disabled selected>Seleccionar Estado</option>
-                                                            <option value="0">Inactivo</option>
-                                                            <option value="1">Activo</option>
-                                                        </select>
-
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="../index.php?controller=PermisosController&action=destroy&id=<?= $user['id'] ?>" class="fa-solid fa-trash-can " style="color: rgb(170, 11, 11);;"></a>
-                            </td>
+                            <th>Asignatura</th>
                         </tr>
-                    <?php endforeach; ?>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+
+                        <tr>
+                            <td><?= $info['id'] ?></td>
+                            <td><?= $info['email'] ?></td>
+                            <td><?= $info['direccion'] ?></td>
+                            <td><?= $info['nacimiento'] ?> </td>
+                            <td><?php
+                                if (empty($asignatura['asignatura'])) {
+                                    echo '<div style="display: inline-block; background-color: yellow; padding: 5px;  border-radius: 5px">Asignatura no registrada</div>';
+                                } else {
+                                    echo $asignatura['asignatura'];
+                                }
+                                ?></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     </div>
@@ -245,15 +193,7 @@ $b = $a->all();
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#datatable_users').DataTable({
-                lengthMenu: [5, 10, 15, 20],
-                searching: true,
-                pageLength: 10
-            });
-        });
-    </script>
+
 </body>
 
 </html>
